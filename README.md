@@ -17,7 +17,8 @@ lib
 ├── bloc -> state of app
 ├── data ->  data providers
 ├── widgets -> mini widgets
-├── models -> data models
+├── common -> common styles and constants
+├── models -> data models (use freezed )
 ├── repository -> combiner of data provider
 ├── utils -> any utils and extensions
 │   └── logger.dart
