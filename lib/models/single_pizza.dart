@@ -21,7 +21,7 @@ class PizzaSize with _$PizzaSize {
   @JsonSerializable(explicitToJson: true)
   const factory PizzaSize({
     required String name,
-    double? price,
+    required double price,
   }) = PizzaSizeData;
   factory PizzaSize.fromJson(Map<String, dynamic> json) =>
       _$PizzaSizeFromJson(json);
@@ -31,13 +31,20 @@ typedef Toppings = List<Topping>;
 typedef PizzaSizes = List<PizzaSize>;
 typedef PizzaStructure = Map<String, String>;
 
+class AttrCartItem<T> {
+  T attr;
+  int count;
+  AttrCartItem({required this.attr, required this.count});
+}
+
 @freezed
 class SinglePizza with _$SinglePizza {
+  const SinglePizza._(); // Added constructor
+
   @JsonSerializable(explicitToJson: true)
   const factory SinglePizza({
     required String uuid,
     required String title,
-    required double price,
     required PizzaSizes sizes,
     PizzaStructure? structure,
     Toppings? toppings,
@@ -49,10 +56,22 @@ class SinglePizza with _$SinglePizza {
 
   double priceCalculator({
     required int count,
-    List<int>? toppingsList,
+    List<AttrCartItem<Topping>>? toppingsList,
+    PizzaSize? pizzaSize,
   }) {
-    var _toppings = 0.0;
-    if (toppingsList != null) {}
-    return _toppings + count;
+    var price = 0.0;
+    if (toppingsList != null) {
+      for (var i = 0; i < toppingsList.length; i++) {
+        price += toppingsList[i].attr.price * toppingsList[i].count;
+      }
+    }
+    if (pizzaSize != null) {
+      price += pizzaSize.price * count;
+    } else {
+      var _defaultSize =
+          sizes.firstOrNull ?? const PizzaSize(name: "", price: 0);
+      price += _defaultSize.price * count;
+    }
+    return price;
   }
 }
