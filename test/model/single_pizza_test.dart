@@ -46,4 +46,34 @@ void main() {
         ),
         80);
   });
+
+  test('Toppings fromJson', () {
+    var _toppingFromJson = Topping.fromJson({
+      'name': 'test topping',
+      'price': 20,
+    });
+    var _topping = const Topping(name: 'test topping', price: 20);
+    expect(
+      _topping,
+      equals(_toppingFromJson),
+    );
+  });
+
+  test('Single Pizza fromJson', () {
+    var _singlePizza = SinglePizza.fromJson({
+      "uuid": '123',
+      "title": 'hello',
+      "sizes": [
+        {"name": 'adsa', "price": 1}
+      ]
+    });
+    expect(
+      _singlePizza,
+      equals(
+        const SinglePizza(uuid: '123', title: 'hello', sizes: [
+          PizzaSize(name: 'adsa', price: 1.0),
+        ]),
+      ),
+    );
+  });
 }
