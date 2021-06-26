@@ -76,4 +76,13 @@ void main() {
       ),
     );
   });
+  test('Ingredient fromJson', () {
+    var _singlePizza = Ingredient.fromJson({"enabled": true, "name": 'hello'});
+    expect(
+      _singlePizza,
+      equals(
+        const Ingredient(enabled: true, name: 'hello'),
+      ),
+    );
+  });
 }

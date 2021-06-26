@@ -26,7 +26,7 @@ lib
 ```
 
 
-for test coverage clean generated files run
+# For test coverage clean generated files run
 ```bash
 dart  run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.g.dart$' -r '.freezed.dart$'
 ```

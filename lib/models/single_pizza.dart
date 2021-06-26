@@ -10,6 +10,7 @@ class Topping with _$Topping {
   const factory Topping({
     required String name,
     required double price,
+    String? srcImage,
   }) = ToppingData;
 
   factory Topping.fromJson(Map<String, dynamic> json) =>
@@ -22,6 +23,7 @@ class PizzaSize with _$PizzaSize {
   const factory PizzaSize({
     required String name,
     required double price,
+    String? srcImage,
   }) = PizzaSizeData;
   factory PizzaSize.fromJson(Map<String, dynamic> json) =>
       _$PizzaSizeFromJson(json);
@@ -29,12 +31,25 @@ class PizzaSize with _$PizzaSize {
 
 typedef Toppings = List<Topping>;
 typedef PizzaSizes = List<PizzaSize>;
-typedef PizzaStructure = Map<String, String>;
+typedef Ingredients = List<Ingredient>;
 
 class AttrCartItem<T> {
   T attr;
   int count;
   AttrCartItem({required this.attr, required this.count});
+}
+
+@freezed
+class Ingredient with _$Ingredient {
+  @JsonSerializable(explicitToJson: true)
+  const factory Ingredient({
+    required String name,
+    required bool enabled,
+    String? srcImage,
+  }) = IngredientData;
+
+  factory Ingredient.fromJson(Map<String, dynamic> json) =>
+      _$IngredientFromJson(json);
 }
 
 @freezed
@@ -46,7 +61,8 @@ class SinglePizza with _$SinglePizza {
     required String uuid,
     required String title,
     required PizzaSizes sizes,
-    PizzaStructure? structure,
+    String? urlImage,
+    Ingredients? ingredients,
     Toppings? toppings,
     String? description,
   }) = SinglePizzaData;
