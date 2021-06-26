@@ -10,6 +10,7 @@ class Topping with _$Topping {
   const factory Topping({
     required String name,
     required double price,
+    required String uuid,
     String? srcImage,
   }) = ToppingData;
 
@@ -23,6 +24,7 @@ class PizzaSize with _$PizzaSize {
   const factory PizzaSize({
     required String name,
     required double price,
+    required String uuid,
     String? srcImage,
   }) = PizzaSizeData;
   factory PizzaSize.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +34,8 @@ class PizzaSize with _$PizzaSize {
 typedef Toppings = List<Topping>;
 typedef PizzaSizes = List<PizzaSize>;
 typedef Ingredients = List<Ingredient>;
+typedef Doughs = List<Dough>;
+typedef Boards = List<Board>;
 
 class AttrCartItem<T> {
   T attr;
@@ -40,11 +44,32 @@ class AttrCartItem<T> {
 }
 
 @freezed
+class Dough with _$Dough {
+  factory Dough({
+    required String name,
+    required String uuid,
+  }) = _Dough;
+
+  factory Dough.fromJson(Map<String, dynamic> json) => _$DoughFromJson(json);
+}
+
+@freezed
+class Board with _$Board {
+  factory Board({
+    required String name,
+    required String uuid,
+  }) = _Board;
+
+  factory Board.fromJson(Map<String, dynamic> json) => _$BoardFromJson(json);
+}
+
+@freezed
 class Ingredient with _$Ingredient {
   @JsonSerializable(explicitToJson: true)
   const factory Ingredient({
     required String name,
     required bool enabled,
+    required String uuid,
     String? srcImage,
   }) = IngredientData;
 
@@ -63,6 +88,8 @@ class SinglePizza with _$SinglePizza {
     required PizzaSizes sizes,
     String? urlImage,
     Ingredients? ingredients,
+    Doughs? doughs,
+    Boards? boards,
     Toppings? toppings,
     String? description,
   }) = SinglePizzaData;
@@ -84,8 +111,8 @@ class SinglePizza with _$SinglePizza {
     if (pizzaSize != null) {
       price += pizzaSize.price * count;
     } else {
-      var _defaultSize =
-          sizes.firstOrNull ?? const PizzaSize(name: "", price: 0);
+      var _defaultSize = sizes.firstOrNull ??
+          const PizzaSize(name: "", price: 0, uuid: 'none');
       price += _defaultSize.price * count;
     }
     return price;
