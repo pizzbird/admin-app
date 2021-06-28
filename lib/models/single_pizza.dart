@@ -12,6 +12,8 @@ class Topping with _$Topping {
     required double price,
     required String uuid,
     String? srcImage,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = ToppingData;
 
   factory Topping.fromJson(Map<String, dynamic> json) =>
@@ -25,17 +27,13 @@ class PizzaSize with _$PizzaSize {
     required String name,
     required double price,
     required String uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
     String? srcImage,
   }) = PizzaSizeData;
   factory PizzaSize.fromJson(Map<String, dynamic> json) =>
       _$PizzaSizeFromJson(json);
 }
-
-typedef Toppings = List<Topping>;
-typedef PizzaSizes = List<PizzaSize>;
-typedef Ingredients = List<Ingredient>;
-typedef Doughs = List<Dough>;
-typedef Boards = List<Board>;
 
 class AttrCartItem<T> {
   T attr;
@@ -48,6 +46,8 @@ class Dough with _$Dough {
   factory Dough({
     required String name,
     required String uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _Dough;
 
   factory Dough.fromJson(Map<String, dynamic> json) => _$DoughFromJson(json);
@@ -58,6 +58,8 @@ class Board with _$Board {
   factory Board({
     required String name,
     required String uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _Board;
 
   factory Board.fromJson(Map<String, dynamic> json) => _$BoardFromJson(json);
@@ -70,12 +72,20 @@ class Ingredient with _$Ingredient {
     required String name,
     required bool enabled,
     required String uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
     String? srcImage,
   }) = IngredientData;
 
   factory Ingredient.fromJson(Map<String, dynamic> json) =>
       _$IngredientFromJson(json);
 }
+
+typedef Toppings = List<Topping>;
+typedef PizzaSizes = List<PizzaSize>;
+typedef Ingredients = List<Ingredient>;
+typedef Doughs = List<Dough>;
+typedef Boards = List<Board>;
 
 @freezed
 class SinglePizza with _$SinglePizza {
@@ -86,6 +96,9 @@ class SinglePizza with _$SinglePizza {
     required String uuid,
     required String title,
     required PizzaSizes sizes,
+    Map<String, String>? nutritionalValue,
+    DateTime? createdAt,
+    DateTime? updatedAt,
     String? urlImage,
     Ingredients? ingredients,
     Doughs? doughs,
