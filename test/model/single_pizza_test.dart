@@ -1,20 +1,20 @@
-import 'package:admin_app/models/single_pizza.dart';
+import 'package:admin_app/models/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  var _singlePizza = const SinglePizza(
+  var _singlePizza = const Product.pizza(
     uuid: 'uuid',
     title: '',
     sizes: [
-      PizzaSize(name: 'test', price: 10, uuid: 'uuid'),
-      PizzaSize(name: 'test2', price: 20, uuid: 'uuid')
+      ProductSize(name: 'test', price: 10, uuid: 'uuid'),
+      ProductSize(name: 'test2', price: 20, uuid: 'uuid')
     ],
   );
   test('Single pizza', () {
     expect(_singlePizza.priceCalculator(count: 1), 10);
   });
   test('With custom size', () {
-    var pizzaSize = const PizzaSize(name: '', price: 20, uuid: 'uuid');
+    var pizzaSize = const ProductSize(name: '', price: 20, uuid: 'uuid');
     expect(_singlePizza.priceCalculator(count: 2, pizzaSize: pizzaSize), 40);
   });
   test('With toping', () {
@@ -33,7 +33,7 @@ void main() {
         attr: const Topping(name: 'test topping', price: 20, uuid: 'uuid'),
       )
     ];
-    var pizzaSize = const PizzaSize(name: '', price: 20, uuid: 'uuid');
+    var pizzaSize = const ProductSize(name: '', price: 20, uuid: 'uuid');
     expect(
         _singlePizza.priceCalculator(
             count: 1, pizzaSize: pizzaSize, toppingsList: toping),
@@ -58,7 +58,7 @@ void main() {
   });
 
   test('Single Pizza fromJson', () {
-    var _singlePizza = SinglePizza.fromJson({
+    var _singlePizza = Product.fromJson({
       "uuid": '123',
       "title": 'hello',
       "sizes": [
@@ -68,8 +68,8 @@ void main() {
     expect(
       _singlePizza,
       equals(
-        const SinglePizza(uuid: '123', title: 'hello', sizes: [
-          PizzaSize(name: 'adsa', price: 1.0, uuid: 'uuid'),
+        const Product.pizza(uuid: '123', title: 'hello', sizes: [
+          ProductSize(name: 'adsa', price: 1.0, uuid: 'uuid'),
         ]),
       ),
     );

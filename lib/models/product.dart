@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'single_pizza.freezed.dart';
-part 'single_pizza.g.dart';
+part 'product.freezed.dart';
+part 'product.g.dart';
 
 @freezed
 class Topping with _$Topping {
@@ -12,8 +11,8 @@ class Topping with _$Topping {
     required double price,
     required String uuid,
     String? srcImage,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    int? createdAt,
+    int? updatedAt,
   }) = ToppingData;
 
   factory Topping.fromJson(Map<String, dynamic> json) =>
@@ -21,18 +20,18 @@ class Topping with _$Topping {
 }
 
 @freezed
-class PizzaSize with _$PizzaSize {
+class ProductSize with _$ProductSize {
   @JsonSerializable(explicitToJson: true)
-  const factory PizzaSize({
+  const factory ProductSize({
     required String name,
     required double price,
     required String uuid,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    int? createdAt,
+    int? updatedAt,
     String? srcImage,
-  }) = PizzaSizeData;
-  factory PizzaSize.fromJson(Map<String, dynamic> json) =>
-      _$PizzaSizeFromJson(json);
+  }) = ProductSizeData;
+  factory ProductSize.fromJson(Map<String, dynamic> json) =>
+      _$ProductSizeFromJson(json);
 }
 
 class AttrCartItem<T> {
@@ -46,8 +45,8 @@ class Dough with _$Dough {
   factory Dough({
     required String name,
     required String uuid,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    int? createdAt,
+    int? updatedAt,
   }) = _Dough;
 
   factory Dough.fromJson(Map<String, dynamic> json) => _$DoughFromJson(json);
@@ -58,8 +57,8 @@ class Board with _$Board {
   factory Board({
     required String name,
     required String uuid,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    int? createdAt,
+    int? updatedAt,
   }) = _Board;
 
   factory Board.fromJson(Map<String, dynamic> json) => _$BoardFromJson(json);
@@ -72,8 +71,8 @@ class Ingredient with _$Ingredient {
     required String name,
     required bool enabled,
     required String uuid,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    int? createdAt,
+    int? updatedAt,
     String? srcImage,
   }) = IngredientData;
 
@@ -82,38 +81,46 @@ class Ingredient with _$Ingredient {
 }
 
 typedef Toppings = List<Topping>;
-typedef PizzaSizes = List<PizzaSize>;
+typedef ProductSizes = List<ProductSize>;
 typedef Ingredients = List<Ingredient>;
 typedef Doughs = List<Dough>;
 typedef Boards = List<Board>;
 
 @freezed
-class SinglePizza with _$SinglePizza {
-  const SinglePizza._(); // Added constructor
+class Product with _$Product {
+  const Product._();
 
   @JsonSerializable(explicitToJson: true)
-  const factory SinglePizza({
+  const factory Product.pizza({
     required String uuid,
     required String title,
-    required PizzaSizes sizes,
+    required ProductSizes sizes,
+    String? categoryUuid,
     Map<String, String>? nutritionalValue,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    int? createdAt,
+    int? updatedAt,
     String? urlImage,
     Ingredients? ingredients,
     Doughs? doughs,
     Boards? boards,
     Toppings? toppings,
     String? description,
-  }) = SinglePizzaData;
+  }) = Pizza;
 
-  factory SinglePizza.fromJson(Map<String, dynamic> json) =>
-      _$SinglePizzaFromJson(json);
+  @JsonSerializable(explicitToJson: true)
+  const factory Product.drink({
+    required String uuid,
+    required String title,
+    required ProductSizes sizes,
+  }) = Drink;
+
+  factory Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
 
   double priceCalculator({
     required int count,
     List<AttrCartItem<Topping>>? toppingsList,
-    PizzaSize? pizzaSize,
+    ProductSize? pizzaSize,
   }) {
     var price = 0.0;
     if (toppingsList != null) {
@@ -125,7 +132,7 @@ class SinglePizza with _$SinglePizza {
       price += pizzaSize.price * count;
     } else {
       var _defaultSize = sizes.firstOrNull ??
-          const PizzaSize(name: "", price: 0, uuid: 'none');
+          const ProductSize(name: "", price: 0, uuid: 'none');
       price += _defaultSize.price * count;
     }
     return price;
