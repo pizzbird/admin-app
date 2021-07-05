@@ -1,3 +1,4 @@
+import 'package:admin_app/models/address.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'restaurant.freezed.dart';
@@ -7,10 +8,8 @@ part 'restaurant.g.dart';
 class Restaurant with _$Restaurant {
   @JsonSerializable(explicitToJson: true)
   const factory Restaurant({
-    required double longitude,
-    required double latitude,
     required String title,
-    required String address,
+    required Address address,
     List<SocialMedia>? socialMedia,
     String? description,
   }) = RestaurantData;
