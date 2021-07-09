@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -33,7 +35,15 @@ dependencies:
   json_annotation: ^4.0.1
   logging: ^1.0.1
   equatable: ^2.0.3
+  intl: ^0.17.0
   freezed_annotation: ^0.14.2
+
+  pizzbird_interfaces:
+    git:
+      url: git@github.com:pizzbird/interfaces.git
+      ref: master
+      path: generated/dart/
+
 
 dev_dependencies:
   flutter_test:
@@ -52,3 +62,5 @@ flutter:
   assets:
     - assets/
 
+flutter_intl:
+  enabled: true
